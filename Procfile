@@ -1,1 +1,1 @@
-web: gunicorn  findbooks.wsgi --log-file -
+web: gunicorn  findbooks.wsgi 
