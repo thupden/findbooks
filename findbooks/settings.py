@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(+-&4q3ijhgzozx535hm_!-jgk)&@d3+a8q_mwfkka263ki*q#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['findbooksecommercesite.herokuapp.com', '127.0.0.1']
 
