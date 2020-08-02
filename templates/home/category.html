@@ -1,0 +1,38 @@
+{%extends 'base.html' %}
+{% block css %}
+.data{
+  margin-top:20px;
+}
+{% endblock css %}
+{% block body %}
+<div class="data">
+  <div class=" mx-2 my-2">
+    <div class="row">
+        <!--sample test-->
+      {% if data.product %}
+        {% for i in data.product %}
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="{% url 'details' i.id %} "><img class="card-img-top" src="{{i.product_img1.url}}" alt="" style="height:250px;"></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{% url 'details' i.id %}">{{i.product}}</a>
+                </h4>
+                <h6>Author: {{i.author}}</h6>
+                <h5>Rs: {{i.product_price}}</h5>
+                <p class="card-text">{{i.product_description|slice:":50"}}...</p>
+              </div>
+              <div class="card-footer">
+                <p>{{i.district}}, {{i.state}}</p>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+      {% else %}
+      <h3>No product Yet</h3>
+    {% endif %}
+    </div>
+    </div>
+   
+</div>
+{% endblock body %}

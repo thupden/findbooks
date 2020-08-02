@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block css %}
+.friends{
+    margin-top:30px;
+}
+.prof{
+    margin-top:50px;
+}
+.default{
+    margin-top:40%;
+    margin-left:50%;
+}
+.pro_img{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom:20px;
+}
+.pro_link{
+    margin-left:35%;
+}
+
+.contact{
+    margin-top:50px;
+}
+
+{% endblock css %}
+{% block body %}
+    <div class="container my-4">
+        <div class="row prof">
+            <div class="col-lg-4">
+                  {% if request.user == data.username %}
+                    <a href="" data-toggle="modal" data-target="#profileimage">
+                        {% if data.pro_img %} 
+                            <img class="pro_img"  src="{{data.pro_img.url}}" alt="profile_img"></a>
+                        {% else %}
+                       
+                            <img class="pro_img"  src="/media/default/default.jpg" alt="profile_img"></a>
+                        {% endif %}
+                    <a class="pro_link" href="" data-toggle="modal" data-target="#profileimage">Change Profile</a>
+                  {% else %}
+                    {% if data.pro_img %} 
+                        <img class="pro_img"  src="{{data.pro_img.url}}" alt="profile_img"></a>
+                        {% if data.connection %}
+                          <a href="{% url 'follow' data.username %}"  class="btn btn-outline-dark pro_link" type="submit" role="button" id="follow">Unfollow</a>
+                        {%else%}
+                        <a href="{% url 'follow' data.username %}"  class="btn btn-outline-dark pro_link" type="submit" role="button" id="follow">Follow</a>
+                        {% endif %}
+                    {% else %}
+                        <img class="pro_img"  src="/media/default/default.jpg" alt="profile_img"></a> 
+                        {% if data.connection %}
+                          <a href="{% url 'follow' data.username %}"  class="btn btn-outline-dark pro_link" type="submit" role="button" id="follow">Unfollow</a>
+                        {%else%}
+                        <a href="{% url 'follow' data.username %}"  class="btn btn-outline-dark pro_link" type="submit" role="button" id="follow">Follow</a>
+                        {% endif %}
+      
+                    {% endif %}
+                  {% endif %}
+              <div class="list-group group_data">
+               <div>
+                <div class="card contact">
+                    <div class="card-header">
+                      <h5>Contact Info</h5>
+                    </div>
+                    <div class="card-body">
+                     
+                      <p class="card-text"><strong>Contact no: </strong>
+                        
+                        {% if data.contact_no %}
+                            {{data.contact_no}}
+                        {% else %}
+                        {% if request.user == data.username %}
+                          <a href="{% url 'edit_profile' data.username %}">Add contact no</a>
+                        {% endif %}
+                      {% endif %}
+                      </p>
+                      <p><strong>Email: </strong>
+                        {% if data.email %}
+                            {{ data.email}}
+                        {%else %}
+                        {% if request.user == data.username %}
+                            <a href="{% url 'edit_profile' data.username %}">Add email</a>
+                        {% endif %}
+                        {% endif %}
+                    </p>
+                    </div>
+                  </div>
+
+                  <div class="card friends">
+                    <div class="card-header">
+                      <h5>Friends</h5>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text"><strong>Followers: </strong>{{data.follower}}</p>
+                      <p><strong>Following: </strong>{{data.following}}</p>
+                    </div>
+                  </div>
+               </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+                <h2 style="display:inline-block; margin-right:10px;">
+                    {% if data.name %}
+                        {{data.name}}
+                    {% else %}
+                        {{data.username}}
+                    {% endif %}
+                </h2> 
+                {% if request.user == data.username %}
+                  <a href="{% url 'edit_profile' data.username%}" class="btn btn-outline-dark" role="button">Edit Account</a>
+                {% endif %}
+                <p><b>{{data.bio}}</b></p>
+                <hr>
+                {% if data.product %}
+                <div class="row">
+                {% for i in data.product %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                      <a href="{% url 'details' i.id %} "><img class="card-img-top" src="{{i.product_img1.url}}" alt="" style="height:200px;"></a>
+                      <div class="card-body">
+                        <h4 class="card-title">
+                          <a href="{% url 'details' i.id %}">{{i.product}}</a>
+                        </h4>
+                        <h5>Rs: {{i.product_price}}</h5>
+                      </div>
+                      <div class="card-footer">
+                        <p>{{i.state}}, <p style="font-size:12px; text-align:right;">{{i.date.date}}</p></p>
+                        {% if request.user == data.username %}
+                          <a href="{% url 'delads' i.pk %}">Delete</a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div class='default'>
+                        <p>You have no ads yet!</p>
+                        <a role="button" class="btn btn-outline-dark" href="{% url 'sell' %}">Sell</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="profileimage" tabindex="-1" role="dialog" aria-labelledby="profileimagetitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileimagetitle">Change Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="{%url 'account' request.user %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if data.pro_img %}
+                    <img src="{{data.pro_img.url}}" alt=""style="height:150px;width:150px;margin-right:1%;margin-bottom:10px;border-radius:50%;">
+                {% else %}
+                <img src="/media/default/default.jpg" alt=""style="height:150px;width:150px;margin-right:1%;margin-bottom:10px;border-radius:50%;">
+                {%endif%}
+                <input type="file" name="profile_image">
+                <button type="submit" class="btn btn-outline-dark" style="display:inline-block;margin-right:20px;margin-left:20px;">Save Profile</button>
+                <a class="btn btn-outline-dark" href="{% url 'delpost' %}" style="margin-left:20px;">Remove Profile</a>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--footer-->
+    <footer class="py-5 bg-dark footer">
+        <div class="container">
+          <p class="m-0 text-center text-white">Copyright &copy; Findbooks 2020</p>
+        </div>
+        <!-- /.container -->
+      </footer>
+{% endblock body %}
+
+{% block js %}
+  <script>
+    $("#follow").click(function(e){
+      e.preventDefault()
+      var href = this.href
+      console.log(href)
+      $.ajax({
+          url: href,
+          success : function(response){
+              if(response["following"]){
+                  $("#follow").html("Unfollow")
+              }
+              else{
+                  $("#follow").html("Follow")
+              }
+          }
+      })
+    })
+  </script>
+  
+{% endblock js %}
+
+

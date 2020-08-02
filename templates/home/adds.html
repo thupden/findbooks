@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block css %}
+.image{
+    margin-top:5px;
+}
+{% endblock css %}
+{% block body %}
+   <div class="container my-4"style="border:solid 1px;padding:20px;">
+       <h2 style="text-align:center;">Post Your Book</h2>
+       <div class="container" style="width:600px;">
+        <form method="POST" action="{% url 'sell' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="sel1">Select category:</label>
+                <select class="form-control" id="sel1" name="drop1">
+                    {% for i in data.category %}
+                        <option>{{i}}</option>    
+                    {% endfor %}
+                </select>
+            </div>   
+            <div class="form-group">
+              <label for="bookname">Book Name</label>
+              <input type="text" class="form-control" id="bookname" placeholder='Book name' name='bookname'>
+            </div>
+            <div class="form-group">
+                <label for="authorname">Author</label>
+                <input type="text" class="form-control" id="authorname" placeholder='Author' name="author">
+              </div>
+              <div class="form-group">
+                <label for="images">Images</label>
+                <input type="file" class="form-control-file image" id="images" name="img_1">
+                <input type="file" class="form-control-file image" id="images" name="img_2">
+                <input type="file" class="form-control-file image" id="images" name="img_3">
+                <input type="file" class="form-control-file image" id="images" name="img_4">
+                <input type="file" class="form-control-file image" id="images" name="img_5">
+              </div>
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" name='price' required>
+              </div>
+              <div class="form-group">
+                <label for="contactno">Contact No</label>
+                <input type="number" class="form-control" id="contactno" name='contact_no' required>
+              </div>
+              <div class="form-group">
+                <label for="address">Address</label>
+                <textarea type="text" class="form-control" id="address" placeholder='Address' style="height:100px;" name="address"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="districe">District</label>
+                <input type="text" class="form-control" id="district" placeholder='District' name="district">
+              </div>
+              <div class="form-group">
+                <label for="sel1">State</label>
+                <select class="form-control" id="sel1" name='drop2'>
+                  <option>Andaman and Nicobar Islands</option>
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chandigarh</option>
+                  <option>Chhattisgarh</option>
+                  <option>Dadra and Nagar Haveli</option>
+                  <option>Daman and Diu</option>
+                  <option>Delhi</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jammu and Kashmir</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Lakshadweep</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option >Mizoram</option>
+                  <option >Nagaland</option>
+                  <option >Odisha</option>
+                  <option >Puducherry</option>
+                  <option >Punjab</option>
+                  <option >Rajasthan</option>
+                  <option >Sikkim</option>
+                  <option >Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Details</label>
+                <textarea  id=""  rows="10"  type="text" class="form-control" id="description" placeholder='Details' name="details"></textarea>
+              </div>
+            <button type="submit" class="btn btn-outline-dark">Add</button>
+          </form>
+       </div>
+   
+   </div>
+
+   {% block js %}
+        <script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
+   {% endblock js %}
+{% endblock body %}

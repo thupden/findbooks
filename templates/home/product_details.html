@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/product_details.css' %}">
+{% endblock head %}
+	{% block body %}
+	<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img src="{{data.product.product_img1.url}}" style="height:400px; width:500px;"/></div>
+						  {%if data.product.product_img2%}
+						  <div class="tab-pane" id="pic-2"><img src="{{data.product.product_img2.url}}" style="height:400px; width:500px;"/></div>
+						  {% endif %}
+						  {%if data.product.product_img3%} 
+						  <div class="tab-pane" id="pic-3"><img src="{{data.product.product_img3.url}}" style="height:400px; width:500px;"/></div>
+						  {% endif %}
+						  {%if data.product.product_img4%} 
+						  <div class="tab-pane" id="pic-4"><img src="{{data.product.product_img4.url}}" style="height:400px; width:500px;" /></div>
+							{% endif %} 
+						  {%if data.product.product_img5%} 
+						  <div class="tab-pane" id="pic-5"><img src="{{data.product.product_img5.url}}"  style="height:400px; width:500px;"/></div>
+						  {% endif %}
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{data.product.product_img1.url}}" style="height:100px; width:80px;"/></a></li>
+						  {%if data.product.product_img2%}
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="{{data.product.product_img2.url}}" style="height:100px; width:80px;"/></a></li>
+						  {% endif %}
+						  {%if data.product.product_img3%}
+						  <li><a data-target="#pic-3" data-toggle="tab"><img src="{{data.product.product_img3.url}}" style="height:100px; width:80px;"/></a></li>
+						 {% endif %} 
+						  {%if data.product.product_img4%} 
+						  <li><a data-target="#pic-4" data-toggle="tab"><img src="{{data.product.product_img4.url}}" style="height:100px; width:80px;"/></a></li>
+						 {%endif%} 
+						  {%if data.product.product_img5%} 
+						  <li><a data-target="#pic-5" data-toggle="tab"><img src="{{data.product.product_img5.url}}" style="height:100px; width:80px;"/></a></li>
+						  {% endif %}
+						</ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">{{data.product.product}}</h3>
+						<h6 class="product-title">Author: {{data.product.author}}</h6>
+						<p class="product-description"><strong>Details: </strong>{{data.product.product_description}}</p>
+						<h4 class="price">price: <span>₹ {{data.product.product_price}}</span></h4>
+						<h6><strong>Address: </strong>{{data.product.address}}</h6>
+						<h6><span><strong>District: </strong>{{data.product.district}}</span> <span><strong>State: </strong>{{data.product.state}}</span></h6>
+						<h6><strong>Contact No:</strong> {{data.product.contact_no}}</h6>
+						<div class="action">
+							<a href="{% url 'account' data.product.user%}" class="add-to-cart btn btn-warning" type="button">Contact</a>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

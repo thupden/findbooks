@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body %}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Create Account</h5>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-primary" role="alert">
+                      <strong>{{ error|escape }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <div class="alert alert-primary" role="alert">
+                    <strong>{{ error|escape }}</strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                {% endfor %}
+            {% endif %}
+            <form class="form-signin signup" method="post" action="{% url 'account_signup' %}">
+              {% csrf_token %} 
+              <div class="form-label-group">
+                <input type="text" id="inputusername" class="form-control" placeholder="Username" required autofocus name="username" >
+                <label for="inputusername">Username</label>
+              </div>
+              <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus name="email" >
+                <label for="inputEmail">Email address</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword1" class="form-control" placeholder="Password" required name="password1" >
+                <label for="inputPassword1">Password</label>
+              </div>
+              <div class="form-label-group">
+                <input type="password" id="inputPassword2" class="form-control" placeholder="Confirm password" required name="password2" >
+                <label for="inputPassword2">Confirm Password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock body %}
